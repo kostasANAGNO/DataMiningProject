@@ -206,7 +206,7 @@ plt.show()
 
 ![](images/image1.png)
 
-![](NewProject_files/figure-commonmark/cell-2-output-3.png)
+![](images/image2.png)
 
 Objective: We are exploring the dataset by checking its dimensions, the
 first few rows, and any missing values. Action: After loading the data,
@@ -750,15 +750,15 @@ plt.ylabel('True')
 plt.show()
 ```
 
-![](NewProject_files/figure-commonmark/cell-6-output-1.png)
+![](images/image3.png)
 
-![](NewProject_files/figure-commonmark/cell-6-output-2.png)
+![](images/image4.png)
 
     Accuracy: 0.9330
     F1 Score: 0.1190
     Sensitivity: 0.0811
 
-![](NewProject_files/figure-commonmark/cell-6-output-4.png)
+![](images/image5.png)
 
 ## Classification 2
 
@@ -856,7 +856,7 @@ plt.show()
     18     ChestScan     0.606353
     26  HadDiabetes1     0.377558
 
-![](NewProject_files/figure-commonmark/cell-7-output-2.png)
+![](images/image6.png)
 
 ## Conclusion
 
