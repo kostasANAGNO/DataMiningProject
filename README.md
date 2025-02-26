@@ -213,7 +213,7 @@ first few rows, and any missing values. Action: After loading the data,
 we check for missing values to understand where data preprocessing might
 be needed.
 
-According to the hitmap , the States of America with the highest number
+According to the heatmap , the States of America with the highest number
 of recorded heart attacks are Washington , Florida , Ohio and Texas.
 
 The target variable for classification is HadHeartAttack. In this step,
