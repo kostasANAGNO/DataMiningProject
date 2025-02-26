@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Konstantinos Anagnostou">
+
+<title>Data Mining Project</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="NewProject_files/libs/clipboard/clipboard.min.js"></script>
+<script src="NewProject_files/libs/quarto-html/quarto.js"></script>
+<script src="NewProject_files/libs/quarto-html/popper.min.js"></script>
+<script src="NewProject_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="NewProject_files/libs/quarto-html/anchor.min.js"></script>
+<link href="NewProject_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="NewProject_files/libs/quarto-html/quarto-syntax-highlighting-2486e1f0a3ee9ee1fc393803a1361cdb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="NewProject_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="NewProject_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="NewProject_files/libs/bootstrap/bootstrap-5bdc1ec511977dd36301403cf8f4f68d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Data Mining Project</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Konstantinos Anagnostou </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>In this project, we apply data mining techniques to analyze the Patients Data.xlsx dataset, which contains various health-related attributes of patients. The goal is to analyze this data and predict whether a patient had a heart attack using machine learning algorithms.</p>
+</section>
+<section id="first-steps" class="level2">
+<h2 class="anchored" data-anchor-id="first-steps">First Steps</h2>
+<p>Exploratory Data Analysis (EDA)</p>
+<p>import liblaries and dataset</p>
+<div id="10e2ca10" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#Load our data</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.read_excel(<span class="st">"Patients Data.xlsx"</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(data.shape)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Data Overview:"</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(data.head())</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Data Info:"</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>data.info()</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">#Check for missing values</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Missing  Values:"</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(data.isnull().<span class="bu">sum</span>())</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co">#Seperate categorical and numerical columns</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>categorical_cols <span class="op">=</span> data.select_dtypes(include<span class="op">=</span>[<span class="st">'object'</span>]).columns</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>numerical_cols <span class="op">=</span> data.select_dtypes(include<span class="op">=</span>[<span class="st">'int64'</span>,<span class="st">'float64'</span>]).columns</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co">#Identify binary variables , 0 or 1</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>binary_cols <span class="op">=</span> [col <span class="cf">for</span> col <span class="kw">in</span> numerical_cols <span class="cf">if</span> <span class="bu">set</span>(data[col].dropna().unique()) <span class="op">&lt;=</span> {<span class="dv">0</span>, <span class="dv">1</span>}]</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>non_binary_cols <span class="op">=</span> [col <span class="cf">for</span> col <span class="kw">in</span> numerical_cols <span class="cf">if</span> col <span class="kw">not</span> <span class="kw">in</span> binary_cols]</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Binary Columns:</span><span class="sc">{</span>binary_cols<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Non-Binary Numerical Columns:</span><span class="sc">{</span>non_binary_cols<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>sns.countplot(x<span class="op">=</span><span class="st">'HadHeartAttack'</span>,data<span class="op">=</span>data)</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Distribution of Target Variable: HadHeartAttack"</span>)</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'HadHeartAttack'</span>)</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Count'</span>)</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Count occurrences of HadHeartAttack per state</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>state_counts <span class="op">=</span> data.groupby(<span class="st">'State'</span>)[<span class="st">'HadHeartAttack'</span>].<span class="bu">sum</span>().reset_index()</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>state_counts.columns <span class="op">=</span> [<span class="st">'state'</span>, <span class="st">'had_heart_attack_count'</span>]</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Load US states shapefile (can use geopandas datasets or an external GeoJSON)</span></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">"https://raw.githubusercontent.com/PublicaMundi/MappingAPI/master/data/geojson/us-states.json"</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>us_states <span class="op">=</span> gpd.read_file(url)</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge state data with our counts</span></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>us_states <span class="op">=</span> us_states.merge(state_counts, left_on<span class="op">=</span><span class="st">'name'</span>, right_on<span class="op">=</span><span class="st">'state'</span>, how<span class="op">=</span><span class="st">'left'</span>)</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>us_states[<span class="st">'had_heart_attack_count'</span>] <span class="op">=</span> us_states[<span class="st">'had_heart_attack_count'</span>].fillna(<span class="dv">0</span>)  <span class="co"># Fill missing states with zero</span></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot heatmap</span></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">10</span>))</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>us_states.plot(column<span class="op">=</span><span class="st">'had_heart_attack_count'</span>, cmap<span class="op">=</span><span class="st">'Reds'</span>, linewidth<span class="op">=</span><span class="fl">0.8</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>, legend<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>ax)</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Heatmap of HadHeartAttack Cases by State"</span>, fontsize<span class="op">=</span><span class="dv">15</span>)</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>ax.axis(<span class="st">"off"</span>)</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(237630, 35)
+Data Overview:
+   PatientID    State     Sex GeneralHealth   AgeCategory  HeightInMeters  \
+0          1  Alabama  Female          Fair  Age 75 to 79            1.63   
+1          2  Alabama  Female     Very good  Age 65 to 69            1.60   
+2          3  Alabama    Male     Excellent  Age 60 to 64            1.78   
+3          4  Alabama    Male     Very good  Age 70 to 74            1.78   
+4          5  Alabama  Female          Good  Age 50 to 54            1.68   
+
+   WeightInKilograms        BMI  HadHeartAttack  HadAngina  ...  \
+0          84.820000  32.099998               0          1  ...   
+1          71.669998  27.990000               0          0  ...   
+2          71.209999  22.530001               0          0  ...   
+3          95.250000  30.129999               0          0  ...   
+4          78.019997  27.760000               0          0  ...   
+
+                             ECigaretteUsage  ChestScan  \
+0  Never used e-cigarettes in my entire life          1   
+1  Never used e-cigarettes in my entire life          0   
+2  Never used e-cigarettes in my entire life          0   
+3  Never used e-cigarettes in my entire life          0   
+4  Never used e-cigarettes in my entire life          1   
+
+      RaceEthnicityCategory  AlcoholDrinkers  HIVTesting  FluVaxLast12  \
+0  White only, Non-Hispanic                0           0             0   
+1  White only, Non-Hispanic                0           0             1   
+2  White only, Non-Hispanic                1           0             0   
+3  White only, Non-Hispanic                0           0             1   
+4  Black only, Non-Hispanic                0           0             1   
+
+   PneumoVaxEver                                  TetanusLast10Tdap  \
+0              1  No, did not receive any tetanus shot in the pa...   
+1              1                                 Yes, received Tdap   
+2              0  Yes, received tetanus shot but not sure what type   
+3              1  Yes, received tetanus shot but not sure what type   
+4              0  No, did not receive any tetanus shot in the pa...   
+
+   HighRiskLastYear  CovidPos  
+0                 0         1  
+1                 0         0  
+2                 0         0  
+3                 0         0  
+4                 0         0  
+
+[5 rows x 35 columns]
+
+Data Info:
+&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 237630 entries, 0 to 237629
+Data columns (total 35 columns):
+ #   Column                     Non-Null Count   Dtype  
+---  ------                     --------------   -----  
+ 0   PatientID                  237630 non-null  int64  
+ 1   State                      237630 non-null  object 
+ 2   Sex                        237630 non-null  object 
+ 3   GeneralHealth              237630 non-null  object 
+ 4   AgeCategory                237630 non-null  object 
+ 5   HeightInMeters             237630 non-null  float64
+ 6   WeightInKilograms          237630 non-null  float64
+ 7   BMI                        237630 non-null  float64
+ 8   HadHeartAttack             237630 non-null  int64  
+ 9   HadAngina                  237630 non-null  int64  
+ 10  HadStroke                  237630 non-null  int64  
+ 11  HadAsthma                  237630 non-null  int64  
+ 12  HadSkinCancer              237630 non-null  int64  
+ 13  HadCOPD                    237630 non-null  int64  
+ 14  HadDepressiveDisorder      237630 non-null  int64  
+ 15  HadKidneyDisease           237630 non-null  int64  
+ 16  HadArthritis               237630 non-null  int64  
+ 17  HadDiabetes                237630 non-null  object 
+ 18  DeafOrHardOfHearing        237630 non-null  int64  
+ 19  BlindOrVisionDifficulty    237630 non-null  int64  
+ 20  DifficultyConcentrating    237630 non-null  int64  
+ 21  DifficultyWalking          237630 non-null  int64  
+ 22  DifficultyDressingBathing  237630 non-null  int64  
+ 23  DifficultyErrands          237630 non-null  int64  
+ 24  SmokerStatus               237630 non-null  object 
+ 25  ECigaretteUsage            237630 non-null  object 
+ 26  ChestScan                  237630 non-null  int64  
+ 27  RaceEthnicityCategory      237630 non-null  object 
+ 28  AlcoholDrinkers            237630 non-null  int64  
+ 29  HIVTesting                 237630 non-null  int64  
+ 30  FluVaxLast12               237630 non-null  int64  
+ 31  PneumoVaxEver              237630 non-null  int64  
+ 32  TetanusLast10Tdap          237630 non-null  object 
+ 33  HighRiskLastYear           237630 non-null  int64  
+ 34  CovidPos                   237630 non-null  int64  
+dtypes: float64(3), int64(23), object(9)
+memory usage: 63.5+ MB
+
+Missing  Values:
+PatientID                    0
+State                        0
+Sex                          0
+GeneralHealth                0
+AgeCategory                  0
+HeightInMeters               0
+WeightInKilograms            0
+BMI                          0
+HadHeartAttack               0
+HadAngina                    0
+HadStroke                    0
+HadAsthma                    0
+HadSkinCancer                0
+HadCOPD                      0
+HadDepressiveDisorder        0
+HadKidneyDisease             0
+HadArthritis                 0
+HadDiabetes                  0
+DeafOrHardOfHearing          0
+BlindOrVisionDifficulty      0
+DifficultyConcentrating      0
+DifficultyWalking            0
+DifficultyDressingBathing    0
+DifficultyErrands            0
+SmokerStatus                 0
+ECigaretteUsage              0
+ChestScan                    0
+RaceEthnicityCategory        0
+AlcoholDrinkers              0
+HIVTesting                   0
+FluVaxLast12                 0
+PneumoVaxEver                0
+TetanusLast10Tdap            0
+HighRiskLastYear             0
+CovidPos                     0
+dtype: int64
+
+Binary Columns:['HadHeartAttack', 'HadAngina', 'HadStroke', 'HadAsthma', 'HadSkinCancer', 'HadCOPD', 'HadDepressiveDisorder', 'HadKidneyDisease', 'HadArthritis', 'DeafOrHardOfHearing', 'BlindOrVisionDifficulty', 'DifficultyConcentrating', 'DifficultyWalking', 'DifficultyDressingBathing', 'DifficultyErrands', 'ChestScan', 'AlcoholDrinkers', 'HIVTesting', 'FluVaxLast12', 'PneumoVaxEver', 'HighRiskLastYear', 'CovidPos']
+Non-Binary Numerical Columns:['PatientID', 'HeightInMeters', 'WeightInKilograms', 'BMI']</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="NewProject_files/figure-html/cell-2-output-2.png" width="693" height="449" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="NewProject_files/figure-html/cell-2-output-3.png" width="1039" height="758" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Objective: We are exploring the dataset by checking its dimensions, the first few rows, and any missing values. Action: After loading the data, we check for missing values to understand where data preprocessing might be needed.</p>
+<p>According to the hitmap , the States of America with the highest number of recorded heart attacks are Washington , Florida , Ohio and Texas.</p>
+<p>The target variable for classification is HadHeartAttack. In this step, i am trying to maintain as much information as possible from the original data.</p>
+<p>So handling categorial variables is crucial for the main analysis.</p>
+<div id="16437e89" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Binary Encoding for Sex</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'Sex'</span>] <span class="op">=</span> data[<span class="st">'Sex'</span>].<span class="bu">map</span>({<span class="st">'Male'</span>: <span class="dv">0</span>, <span class="st">'Female'</span>: <span class="dv">1</span>})</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Ordinal Encoding for GeneraHealth</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>health_order <span class="op">=</span> [<span class="st">'Poor'</span>, <span class="st">'Fair'</span>, <span class="st">'Good'</span>, <span class="st">'Very good'</span>, <span class="st">'Excellent'</span>]</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'GeneralHealth_Ordinal'</span>] <span class="op">=</span> data[<span class="st">'GeneralHealth'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: health_order.index(x) <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Binary encoding for diabetes</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'HadDiabetes1'</span>] <span class="op">=</span> data[<span class="st">'HadDiabetes'</span>].<span class="bu">map</span>({<span class="st">'Yes'</span>: <span class="dv">1</span>, <span class="st">'No'</span>: <span class="dv">0</span>, <span class="st">'No, pre-diabetes or borderline diabetes'</span>: <span class="dv">0</span>, <span class="st">'Yes, but only during pregnancy (female)'</span>: <span class="dv">0</span>})</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co"># One-Hot Encoding for SmokerStatus</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.get_dummies(data, columns<span class="op">=</span>[<span class="st">'SmokerStatus'</span>], drop_first<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Binary Encoding for ECigaretteUsage</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'ECigaretteUsage1'</span>] <span class="op">=</span> data[<span class="st">'ECigaretteUsage'</span>].<span class="bu">map</span>({<span class="st">'Use them some days'</span>: <span class="dv">1</span>, <span class="st">'Never used e-cigarettes in my entire life'</span>: <span class="dv">1</span>, <span class="st">'Not at all (right now)'</span>: <span class="dv">0</span>, <span class="st">'Use them every day'</span>: <span class="dv">2</span>})</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co"># One-Hot Encoding for RaceEthnicityCategory</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.get_dummies(data, columns<span class="op">=</span>[<span class="st">'RaceEthnicityCategory'</span>], drop_first<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Binary Encoding for TetanusLast10Tdap</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'Tetanus'</span>] <span class="op">=</span> data[<span class="st">'TetanusLast10Tdap'</span>].<span class="bu">map</span>({<span class="st">'Yes, received Tdap'</span>: <span class="dv">1</span>, <span class="st">'Yes, received tetanus shot but not sure what type'</span>: <span class="dv">1</span>, <span class="st">'Yes, received tetanus shot, but not Tdap'</span>: <span class="dv">1</span>, <span class="st">'No, did not receive any tetanus shot in the past 10 years'</span>: <span class="dv">0</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="e72edefc" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to convert main age into mean</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> convert_age_to_mean(age_range):</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        age_range <span class="op">=</span> age_range.lower().replace(<span class="st">"age "</span>, <span class="st">""</span>)  </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="st">"or older"</span> <span class="kw">in</span> age_range:</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="dv">80</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        start, end <span class="op">=</span> <span class="bu">map</span>(<span class="bu">int</span>, age_range.split(<span class="st">" to "</span>))</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (start <span class="op">+</span> end) <span class="op">/</span> <span class="dv">2</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">ValueError</span>:</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f" Error in proseccing : </span><span class="sc">{</span>age_range<span class="sc">}</span><span class="ss">"</span>) </span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'AgeNumeric'</span>] <span class="op">=</span> data[<span class="st">'AgeCategory'</span>].<span class="bu">apply</span>(convert_age_to_mean)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Define state-to-region mapping</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>region_mapping <span class="op">=</span> {</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Northeast'</span>: [<span class="st">'Maine'</span>, <span class="st">'New Hampshire'</span>, <span class="st">'Vermont'</span>, <span class="st">'Massachusetts'</span>, <span class="st">'Rhode Island'</span>, <span class="st">'Connecticut'</span>, <span class="st">'New York'</span>, <span class="st">'New Jersey'</span>, <span class="st">'Pennsylvania'</span>, <span class="st">'District of Columbia'</span>],</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">'South'</span>: [<span class="st">'Delaware'</span>, <span class="st">'Maryland'</span>, <span class="st">'West Virginia'</span>, <span class="st">'Virginia'</span>, <span class="st">'Kentucky'</span>, <span class="st">'Tennessee'</span>, <span class="st">'North Carolina'</span>, <span class="st">'South Carolina'</span>, <span class="st">'Georgia'</span>, <span class="st">'Alabama'</span>, <span class="st">'Mississippi'</span>, <span class="st">'Arkansas'</span>, <span class="st">'Louisiana'</span>, <span class="st">'Florida'</span>],</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Midwest'</span>: [<span class="st">'Ohio'</span>, <span class="st">'Indiana'</span>, <span class="st">'Illinois'</span>, <span class="st">'Michigan'</span>, <span class="st">'Wisconsin'</span>, <span class="st">'Minnesota'</span>, <span class="st">'Iowa'</span>, <span class="st">'Missouri'</span>, <span class="st">'North Dakota'</span>, <span class="st">'South Dakota'</span>, <span class="st">'Nebraska'</span>, <span class="st">'Kansas'</span>],</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">'West'</span>: [<span class="st">'Montana'</span>, <span class="st">'Idaho'</span>, <span class="st">'Wyoming'</span>, <span class="st">'Colorado'</span>, <span class="st">'New Mexico'</span>, <span class="st">'Arizona'</span>, <span class="st">'Utah'</span>, <span class="st">'Nevada'</span>, <span class="st">'Washington'</span>, <span class="st">'Oregon'</span>, <span class="st">'California'</span>, <span class="st">'Alaska'</span>, <span class="st">'Hawaii'</span>],</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Southwest'</span>: [<span class="st">'Texas'</span>, <span class="st">'Oklahoma'</span>],</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Territories'</span>: [<span class="st">'Guam'</span>, <span class="st">'Puerto Rico'</span>, <span class="st">'Virgin Islands'</span>]</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign regions to states</span></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_region(state):</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> region, states <span class="kw">in</span> region_mapping.items():</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> state <span class="kw">in</span> states:</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> region    </span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">'Unknown'</span></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'Region'</span>] <span class="op">=</span> data[<span class="st">'State'</span>].<span class="bu">apply</span>(get_region)</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop original state column</span></span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>data.drop(columns<span class="op">=</span>[<span class="st">'State'</span>], inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a><span class="co"># One-hot encode the Region column</span></span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.get_dummies(data, columns<span class="op">=</span>[<span class="st">'Region'</span>], drop_first<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a><span class="co"># Display transformed data</span></span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(data.head())</span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> data.applymap(<span class="kw">lambda</span> x: <span class="dv">1</span> <span class="cf">if</span> x <span class="kw">is</span> <span class="va">True</span> <span class="cf">else</span> (<span class="dv">0</span> <span class="cf">if</span> x <span class="kw">is</span> <span class="va">False</span> <span class="cf">else</span> x))</span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   PatientID  Sex GeneralHealth   AgeCategory  HeightInMeters  \
+0          1    1          Fair  Age 75 to 79            1.63   
+1          2    1     Very good  Age 65 to 69            1.60   
+2          3    0     Excellent  Age 60 to 64            1.78   
+3          4    0     Very good  Age 70 to 74            1.78   
+4          5    1          Good  Age 50 to 54            1.68   
+
+   WeightInKilograms        BMI  HadHeartAttack  HadAngina  HadStroke  ...  \
+0          84.820000  32.099998               0          1          0  ...   
+1          71.669998  27.990000               0          0          0  ...   
+2          71.209999  22.530001               0          0          0  ...   
+3          95.250000  30.129999               0          0          0  ...   
+4          78.019997  27.760000               0          0          0  ...   
+
+   RaceEthnicityCategory_Multiracial, Non-Hispanic  \
+0                                            False   
+1                                            False   
+2                                            False   
+3                                            False   
+4                                            False   
+
+   RaceEthnicityCategory_Other race only, Non-Hispanic  \
+0                                              False     
+1                                              False     
+2                                              False     
+3                                              False     
+4                                              False     
+
+   RaceEthnicityCategory_White only, Non-Hispanic  Tetanus  AgeNumeric  \
+0                                            True        0        77.0   
+1                                            True        1        67.0   
+2                                            True        1        62.0   
+3                                            True        1        72.0   
+4                                           False        0        52.0   
+
+   Region_Northeast Region_South  Region_Southwest  Region_Territories  \
+0             False         True             False               False   
+1             False         True             False               False   
+2             False         True             False               False   
+3             False         True             False               False   
+4             False         True             False               False   
+
+   Region_West  
+0        False  
+1        False  
+2        False  
+3        False  
+4        False  
+
+[5 rows x 49 columns]</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>C:\Users\mixaa\AppData\Local\Temp\ipykernel_21816\221098070.py:48: FutureWarning:
+
+DataFrame.applymap has been deprecated. Use DataFrame.map instead.
+</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        PatientID  Sex GeneralHealth   AgeCategory  HeightInMeters  \
+0               1    1          Fair  Age 75 to 79            1.63   
+1               2    1     Very good  Age 65 to 69            1.60   
+2               3    0     Excellent  Age 60 to 64            1.78   
+3               4    0     Very good  Age 70 to 74            1.78   
+4               5    1          Good  Age 50 to 54            1.68   
+...           ...  ...           ...           ...             ...   
+237625     237626    1          Good  Age 60 to 64            1.57   
+237626     237627    1          Good  Age 55 to 59            1.70   
+237627     237628    0          Fair  Age 45 to 49            1.75   
+237628     237629    1     Very good  Age 25 to 29            1.57   
+237629     237630    1          Good  Age 30 to 34            1.60   
+
+        WeightInKilograms        BMI  HadHeartAttack  HadAngina  HadStroke  \
+0               84.820000  32.099998               0          1          0   
+1               71.669998  27.990000               0          0          0   
+2               71.209999  22.530001               0          0          0   
+3               95.250000  30.129999               0          0          0   
+4               78.019997  27.760000               0          0          0   
+...                   ...        ...             ...        ...        ...   
+237625          90.720001  36.580002               0          0          0   
+237626          72.570000  25.059999               0          1          0   
+237627          70.309998  22.889999               1          1          0   
+237628          46.720001  18.840000               0          0          0   
+237629          83.010002  32.419998               0          0          0   
+
+        ...  RaceEthnicityCategory_Multiracial, Non-Hispanic  \
+0       ...                                                0   
+1       ...                                                0   
+2       ...                                                0   
+3       ...                                                0   
+4       ...                                                0   
+...     ...                                              ...   
+237625  ...                                                0   
+237626  ...                                                0   
+237627  ...                                                0   
+237628  ...                                                0   
+237629  ...                                                0   
+
+        RaceEthnicityCategory_Other race only, Non-Hispanic  \
+0                                                       0     
+1                                                       0     
+2                                                       0     
+3                                                       0     
+4                                                       0     
+...                                                   ...     
+237625                                                  0     
+237626                                                  0     
+237627                                                  0     
+237628                                                  0     
+237629                                                  0     
+
+        RaceEthnicityCategory_White only, Non-Hispanic  Tetanus  AgeNumeric  \
+0                                                    1        0        77.0   
+1                                                    1        1        67.0   
+2                                                    1        1        62.0   
+3                                                    1        1        72.0   
+4                                                    0        0        52.0   
+...                                                ...      ...         ...   
+237625                                               0        0        62.0   
+237626                                               0        1        57.0   
+237627                                               0        1        47.0   
+237628                                               0        0        27.0   
+237629                                               0        0        32.0   
+
+        Region_Northeast Region_South  Region_Southwest  Region_Territories  \
+0                      0            1                 0                   0   
+1                      0            1                 0                   0   
+2                      0            1                 0                   0   
+3                      0            1                 0                   0   
+4                      0            1                 0                   0   
+...                  ...          ...               ...                 ...   
+237625                 0            0                 0                   1   
+237626                 0            0                 0                   1   
+237627                 0            0                 0                   1   
+237628                 0            0                 0                   1   
+237629                 0            0                 0                   1   
+
+        Region_West  
+0                 0  
+1                 0  
+2                 0  
+3                 0  
+4                 0  
+...             ...  
+237625            0  
+237626            0  
+237627            0  
+237628            0  
+237629            0  
+
+[237630 rows x 49 columns]</code></pre>
+</div>
+</div>
+<p>analysis between target and the continuous variables</p>
+<div id="02da8b49" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(data.columns)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>columns_to_drop <span class="op">=</span> [<span class="st">'GeneralHealth'</span>, <span class="st">'AgeCategory'</span>,<span class="st">'TetanusLast10Tdap'</span>,<span class="st">'PatientID'</span>,<span class="st">'HadDiabetes'</span>,<span class="st">'ECigaretteUsage'</span>]  <span class="co"># Droping </span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> data.drop(columns<span class="op">=</span>columns_to_drop)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(data)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>data.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Index(['PatientID', 'Sex', 'GeneralHealth', 'AgeCategory', 'HeightInMeters',
+       'WeightInKilograms', 'BMI', 'HadHeartAttack', 'HadAngina', 'HadStroke',
+       'HadAsthma', 'HadSkinCancer', 'HadCOPD', 'HadDepressiveDisorder',
+       'HadKidneyDisease', 'HadArthritis', 'HadDiabetes',
+       'DeafOrHardOfHearing', 'BlindOrVisionDifficulty',
+       'DifficultyConcentrating', 'DifficultyWalking',
+       'DifficultyDressingBathing', 'DifficultyErrands', 'ECigaretteUsage',
+       'ChestScan', 'AlcoholDrinkers', 'HIVTesting', 'FluVaxLast12',
+       'PneumoVaxEver', 'TetanusLast10Tdap', 'HighRiskLastYear', 'CovidPos',
+       'GeneralHealth_Ordinal', 'HadDiabetes1',
+       'SmokerStatus_Current smoker - now smokes some days',
+       'SmokerStatus_Former smoker', 'SmokerStatus_Never smoked',
+       'ECigaretteUsage1', 'RaceEthnicityCategory_Hispanic',
+       'RaceEthnicityCategory_Multiracial, Non-Hispanic',
+       'RaceEthnicityCategory_Other race only, Non-Hispanic',
+       'RaceEthnicityCategory_White only, Non-Hispanic', 'Tetanus',
+       'AgeNumeric', 'Region_Northeast', 'Region_South', 'Region_Southwest',
+       'Region_Territories', 'Region_West'],
+      dtype='object')
+        Sex  HeightInMeters  WeightInKilograms        BMI  HadHeartAttack  \
+0         1            1.63          84.820000  32.099998               0   
+1         1            1.60          71.669998  27.990000               0   
+2         0            1.78          71.209999  22.530001               0   
+3         0            1.78          95.250000  30.129999               0   
+4         1            1.68          78.019997  27.760000               0   
+...     ...             ...                ...        ...             ...   
+237625    1            1.57          90.720001  36.580002               0   
+237626    1            1.70          72.570000  25.059999               0   
+237627    0            1.75          70.309998  22.889999               1   
+237628    1            1.57          46.720001  18.840000               0   
+237629    1            1.60          83.010002  32.419998               0   
+
+        HadAngina  HadStroke  HadAsthma  HadSkinCancer  HadCOPD  ...  \
+0               1          0          1              1        0  ...   
+1               0          0          0              0        0  ...   
+2               0          0          0              0        0  ...   
+3               0          0          0              0        0  ...   
+4               0          0          0              0        0  ...   
+...           ...        ...        ...            ...      ...  ...   
+237625          0          0          0              0        0  ...   
+237626          1          0          0              0        0  ...   
+237627          1          0          0              0        0  ...   
+237628          0          0          0              0        0  ...   
+237629          0          0          0              0        0  ...   
+
+        RaceEthnicityCategory_Multiracial, Non-Hispanic  \
+0                                                     0   
+1                                                     0   
+2                                                     0   
+3                                                     0   
+4                                                     0   
+...                                                 ...   
+237625                                                0   
+237626                                                0   
+237627                                                0   
+237628                                                0   
+237629                                                0   
+
+        RaceEthnicityCategory_Other race only, Non-Hispanic  \
+0                                                       0     
+1                                                       0     
+2                                                       0     
+3                                                       0     
+4                                                       0     
+...                                                   ...     
+237625                                                  0     
+237626                                                  0     
+237627                                                  0     
+237628                                                  0     
+237629                                                  0     
+
+        RaceEthnicityCategory_White only, Non-Hispanic  Tetanus  AgeNumeric  \
+0                                                    1        0        77.0   
+1                                                    1        1        67.0   
+2                                                    1        1        62.0   
+3                                                    1        1        72.0   
+4                                                    0        0        52.0   
+...                                                ...      ...         ...   
+237625                                               0        0        62.0   
+237626                                               0        1        57.0   
+237627                                               0        1        47.0   
+237628                                               0        0        27.0   
+237629                                               0        0        32.0   
+
+        Region_Northeast  Region_South  Region_Southwest  Region_Territories  \
+0                      0             1                 0                   0   
+1                      0             1                 0                   0   
+2                      0             1                 0                   0   
+3                      0             1                 0                   0   
+4                      0             1                 0                   0   
+...                  ...           ...               ...                 ...   
+237625                 0             0                 0                   1   
+237626                 0             0                 0                   1   
+237627                 0             0                 0                   1   
+237628                 0             0                 0                   1   
+237629                 0             0                 0                   1   
+
+        Region_West  
+0                 0  
+1                 0  
+2                 0  
+3                 0  
+4                 0  
+...             ...  
+237625            0  
+237626            0  
+237627            0  
+237628            0  
+237629            0  
+
+[237630 rows x 43 columns]
+&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 237630 entries, 0 to 237629
+Data columns (total 43 columns):
+ #   Column                                               Non-Null Count   Dtype  
+---  ------                                               --------------   -----  
+ 0   Sex                                                  237630 non-null  int64  
+ 1   HeightInMeters                                       237630 non-null  float64
+ 2   WeightInKilograms                                    237630 non-null  float64
+ 3   BMI                                                  237630 non-null  float64
+ 4   HadHeartAttack                                       237630 non-null  int64  
+ 5   HadAngina                                            237630 non-null  int64  
+ 6   HadStroke                                            237630 non-null  int64  
+ 7   HadAsthma                                            237630 non-null  int64  
+ 8   HadSkinCancer                                        237630 non-null  int64  
+ 9   HadCOPD                                              237630 non-null  int64  
+ 10  HadDepressiveDisorder                                237630 non-null  int64  
+ 11  HadKidneyDisease                                     237630 non-null  int64  
+ 12  HadArthritis                                         237630 non-null  int64  
+ 13  DeafOrHardOfHearing                                  237630 non-null  int64  
+ 14  BlindOrVisionDifficulty                              237630 non-null  int64  
+ 15  DifficultyConcentrating                              237630 non-null  int64  
+ 16  DifficultyWalking                                    237630 non-null  int64  
+ 17  DifficultyDressingBathing                            237630 non-null  int64  
+ 18  DifficultyErrands                                    237630 non-null  int64  
+ 19  ChestScan                                            237630 non-null  int64  
+ 20  AlcoholDrinkers                                      237630 non-null  int64  
+ 21  HIVTesting                                           237630 non-null  int64  
+ 22  FluVaxLast12                                         237630 non-null  int64  
+ 23  PneumoVaxEver                                        237630 non-null  int64  
+ 24  HighRiskLastYear                                     237630 non-null  int64  
+ 25  CovidPos                                             237630 non-null  int64  
+ 26  GeneralHealth_Ordinal                                237630 non-null  int64  
+ 27  HadDiabetes1                                         237630 non-null  int64  
+ 28  SmokerStatus_Current smoker - now smokes some days   237630 non-null  int64  
+ 29  SmokerStatus_Former smoker                           237630 non-null  int64  
+ 30  SmokerStatus_Never smoked                            237630 non-null  int64  
+ 31  ECigaretteUsage1                                     237630 non-null  int64  
+ 32  RaceEthnicityCategory_Hispanic                       237630 non-null  int64  
+ 33  RaceEthnicityCategory_Multiracial, Non-Hispanic      237630 non-null  int64  
+ 34  RaceEthnicityCategory_Other race only, Non-Hispanic  237630 non-null  int64  
+ 35  RaceEthnicityCategory_White only, Non-Hispanic       237630 non-null  int64  
+ 36  Tetanus                                              237630 non-null  int64  
+ 37  AgeNumeric                                           237630 non-null  float64
+ 38  Region_Northeast                                     237630 non-null  int64  
+ 39  Region_South                                         237630 non-null  int64  
+ 40  Region_Southwest                                     237630 non-null  int64  
+ 41  Region_Territories                                   237630 non-null  int64  
+ 42  Region_West                                          237630 non-null  int64  
+dtypes: float64(4), int64(39)
+memory usage: 78.0 MB</code></pre>
+</div>
+</div>
+</section>
+<section id="classification-1" class="level2">
+<h2 class="anchored" data-anchor-id="classification-1">Classification 1</h2>
+</section>
+<section id="knn-algorithmn" class="level1">
+<h1>KNN Algorithmn</h1>
+<p>K-Nearest Neighbors (KNN) is a simple and intuitive machine learning algorithm used for classification and regression tasks. It is a non-parametric, lazy learning algorithm that relies on the similarity between data points to make predictions.</p>
+<p>When a new data point needs to be classified, KNN calculates the distance between the query point and all points in the training dataset using a distance metric such as Euclidean distance. It then identifies the 𝑘 k-closest points, known as the nearest neighbors.</p>
+<p>For classification, the algorithm assigns the class that is most common among the 𝑘 k neighbors (majority voting).</p>
+<section id="dimentionality-reduction" class="level2">
+<h2 class="anchored" data-anchor-id="dimentionality-reduction">Dimentionality Reduction</h2>
+<p>Principal Component Analysis (PCA) is a widely used technique for dimensionality reduction in machine learning. It transforms a dataset with many features into a smaller set of uncorrelated variables called principal components, while retaining as much variance in the data as possible.</p>
+<p>PCA works by:</p>
+<p>1.Standardizing the Data: Ensuring all features have zero mean and unit variance.</p>
+<p>2.Computing the Covariance Matrix: To capture relationships between features.</p>
+<p>3.Finding Eigenvectors and Eigenvalues: The eigenvectors represent the directions (principal components), and the eigenvalues indicate the amount of variance captured by each component.</p>
+<p>4.Selecting Principal Components: The components with the largest eigenvalues are chosen, as they explain the most variance in the data.</p>
+<p>5.Transforming the Data: The original data is projected onto the selected principal components, reducing its dimensionality.</p>
+<div id="64fbba4b" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.neighbors <span class="im">import</span> KNeighborsClassifier</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> accuracy_score, f1_score, confusion_matrix</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> PCA</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> MinMaxScaler</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop target column and separate features</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> data[<span class="st">'HadHeartAttack'</span>]</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> data.drop(columns<span class="op">=</span>[<span class="st">'HadHeartAttack'</span>])</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalize the data</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> MinMaxScaler()</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>X_scaled <span class="op">=</span> scaler.fit_transform(X)</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply PCA</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>pca <span class="op">=</span> PCA()</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>X_pca <span class="op">=</span> pca.fit_transform(X_scaled)</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute explained variance for each number of components</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>explained_variance_ratio <span class="op">=</span> np.cumsum(pca.explained_variance_ratio_)</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot explained variance</span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>plt.plot(<span class="bu">range</span>(<span class="dv">1</span>, <span class="bu">len</span>(explained_variance_ratio) <span class="op">+</span> <span class="dv">1</span>), explained_variance_ratio, marker<span class="op">=</span><span class="st">'o'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>)</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Number of Principal Components'</span>)</span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Cumulative Explained Variance'</span>)</span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Explained Variance by Principal Components'</span>)</span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply PCA and reduce to 3 components for visualization</span></span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>pca_3 <span class="op">=</span> PCA(n_components<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>X_pca_3 <span class="op">=</span> pca_3.fit_transform(X_scaled)</span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualization in three dimensions using the first 3 principal components</span></span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">7</span>))</span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> fig.add_subplot(<span class="dv">111</span>, projection<span class="op">=</span><span class="st">'3d'</span>)</span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>scatter <span class="op">=</span> ax.scatter(X_pca_3[:, <span class="dv">0</span>], X_pca_3[:, <span class="dv">1</span>], X_pca_3[:, <span class="dv">2</span>], c<span class="op">=</span>y, cmap<span class="op">=</span><span class="st">'viridis'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'PCA Visualization (3D)'</span>)</span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Principal Component 1'</span>)</span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Principal Component 2'</span>)</span>
+<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a>ax.set_zlabel(<span class="st">'Principal Component 3'</span>)</span>
+<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a>legend <span class="op">=</span> ax.legend(<span class="op">*</span>scatter.legend_elements(), title<span class="op">=</span><span class="st">"Target"</span>)</span>
+<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a>ax.add_artist(legend)</span>
+<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply PCA and reduce to 20 components for KNN</span></span>
+<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a>pca_20 <span class="op">=</span> PCA(n_components<span class="op">=</span><span class="dv">20</span>)</span>
+<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a>X_pca_20 <span class="op">=</span> pca_20.fit_transform(X_scaled)</span>
+<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a><span class="co"># Split the data into training and testing sets</span></span>
+<span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X_pca_20, y, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-57"><a href="#cb10-57" aria-hidden="true" tabindex="-1"></a><span class="co"># Train and predict with KNN</span></span>
+<span id="cb10-58"><a href="#cb10-58" aria-hidden="true" tabindex="-1"></a>knn <span class="op">=</span> KNeighborsClassifier(n_neighbors<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb10-59"><a href="#cb10-59" aria-hidden="true" tabindex="-1"></a>knn.fit(X_train, y_train)</span>
+<span id="cb10-60"><a href="#cb10-60" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> knn.predict(X_test)</span>
+<span id="cb10-61"><a href="#cb10-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-62"><a href="#cb10-62" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate Accuracy and F1 Score</span></span>
+<span id="cb10-63"><a href="#cb10-63" aria-hidden="true" tabindex="-1"></a>accuracy <span class="op">=</span> accuracy_score(y_test, y_pred)</span>
+<span id="cb10-64"><a href="#cb10-64" aria-hidden="true" tabindex="-1"></a>f1 <span class="op">=</span> f1_score(y_test, y_pred)</span>
+<span id="cb10-65"><a href="#cb10-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-66"><a href="#cb10-66" aria-hidden="true" tabindex="-1"></a><span class="co"># Confusion Matrix for Sensitivity calculation</span></span>
+<span id="cb10-67"><a href="#cb10-67" aria-hidden="true" tabindex="-1"></a>cm <span class="op">=</span> confusion_matrix(y_test, y_pred)</span>
+<span id="cb10-68"><a href="#cb10-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-69"><a href="#cb10-69" aria-hidden="true" tabindex="-1"></a><span class="co"># Sensitivity (True Positive Rate)</span></span>
+<span id="cb10-70"><a href="#cb10-70" aria-hidden="true" tabindex="-1"></a>sensitivity <span class="op">=</span> cm[<span class="dv">1</span>,<span class="dv">1</span>] <span class="op">/</span> (cm[<span class="dv">1</span>,<span class="dv">1</span>] <span class="op">+</span> cm[<span class="dv">1</span>,<span class="dv">0</span>])  <span class="co"># TP / (TP + FN)</span></span>
+<span id="cb10-71"><a href="#cb10-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-72"><a href="#cb10-72" aria-hidden="true" tabindex="-1"></a><span class="co"># Printing the results</span></span>
+<span id="cb10-73"><a href="#cb10-73" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Accuracy: </span><span class="sc">{</span>accuracy<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb10-74"><a href="#cb10-74" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"F1 Score: </span><span class="sc">{</span>f1<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb10-75"><a href="#cb10-75" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Sensitivity: </span><span class="sc">{</span>sensitivity<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb10-76"><a href="#cb10-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-77"><a href="#cb10-77" aria-hidden="true" tabindex="-1"></a><span class="co"># Optionally, you can plot the confusion matrix for better visualization</span></span>
+<span id="cb10-78"><a href="#cb10-78" aria-hidden="true" tabindex="-1"></a>sns.heatmap(cm, annot<span class="op">=</span><span class="va">True</span>, fmt<span class="op">=</span><span class="st">'d'</span>, cmap<span class="op">=</span><span class="st">'Blues'</span>, xticklabels<span class="op">=</span>[<span class="st">'No Heart Attack'</span>, <span class="st">'Heart Attack'</span>], yticklabels<span class="op">=</span>[<span class="st">'No Heart Attack'</span>, <span class="st">'Heart Attack'</span>])</span>
+<span id="cb10-79"><a href="#cb10-79" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Confusion Matrix'</span>)</span>
+<span id="cb10-80"><a href="#cb10-80" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Predicted'</span>)</span>
+<span id="cb10-81"><a href="#cb10-81" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'True'</span>)</span>
+<span id="cb10-82"><a href="#cb10-82" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="NewProject_files/figure-html/cell-6-output-1.png" width="663" height="449" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="NewProject_files/figure-html/cell-6-output-2.png" width="542" height="557" class="figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Accuracy: 0.9330
+F1 Score: 0.1190
+Sensitivity: 0.0811</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="NewProject_files/figure-html/cell-6-output-4.png" width="573" height="449" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="classification-2" class="level2">
+<h2 class="anchored" data-anchor-id="classification-2">Classification 2</h2>
+</section>
+</section>
+<section id="logistic-regression" class="level1">
+<h1>Logistic Regression</h1>
+<ol type="1">
+<li><p><strong>Linear Relationship</strong>: Logistic regression starts by modeling a linear relationship between the features and the log-odds of the outcome: <span class="math display">\[
+z = w_1x_1 + w_2x_2 + \dots + w_nx_n + b
+\]</span> Here, ( z ) is the linear combination of the input features ( x_i ), their weights ( w_i ), and the bias term ( b ).</p></li>
+<li><p><strong>Logistic Function</strong>: To map ( z ) (which can range from ( -) to ( +)) to a probability between 0 and 1, it uses the <strong>sigmoid function</strong>: <span class="math display">\[
+\sigma(z) = \frac{1}{1 + e^{-z}}
+\]</span> The output of the sigmoid function represents the probability of the positive class.</p></li>
+<li><p><strong>Prediction</strong>:</p>
+<ul>
+<li>If ( (z) ), the model predicts the positive class (( 1 )).</li>
+<li>If ( (z) &lt; 0.5 ), it predicts the negative class (( 0 )).</li>
+</ul></li>
+<li><p><strong>Training the Model</strong>:</p>
+<ul>
+<li>Logistic regression learns the weights ( w ) and bias ( b ) by minimizing a <strong>log-loss</strong> (or binary cross-entropy) cost function.</li>
+<li>Optimization algorithms like <strong>Gradient Descent</strong> are used to find the best parameters.</li>
+</ul></li>
+</ol>
+<div id="ade4db0a" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> accuracy_score, roc_auc_score, roc_curve</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> MinMaxScaler</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Data preprocessing</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> data.drop(columns<span class="op">=</span>[<span class="st">'HadHeartAttack'</span>])</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> data[<span class="st">'HadHeartAttack'</span>]</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalization (Min-Max Scaling)</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> MinMaxScaler()</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>X_normalized <span class="op">=</span> scaler.fit_transform(X)</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Split into train-test sets</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X_normalized, y, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Logistic Regression training</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>log_reg <span class="op">=</span> LogisticRegression(random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>log_reg.fit(X_train, y_train)</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Predictions and probabilities</span></span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> log_reg.predict(X_test)</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>y_prob <span class="op">=</span> log_reg.predict_proba(X_test)[:, <span class="dv">1</span>]</span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate Accuracy and AUC (Area Under Curve)</span></span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>accuracy <span class="op">=</span> accuracy_score(y_test, y_pred)</span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>roc_auc <span class="op">=</span> roc_auc_score(y_test, y_prob)</span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Accuracy (Logistic Regression): </span><span class="sc">{</span>accuracy<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"ROC AUC (Logistic Regression): </span><span class="sc">{</span>roc_auc<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. Display the feature importance (coefficients)</span></span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>feature_importance <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Feature'</span>: X.columns,</span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Coefficient'</span>: log_reg.coef_[<span class="dv">0</span>]</span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a>}).sort_values(by<span class="op">=</span><span class="st">'Coefficient'</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Feature Importance (Top Features):"</span>)</span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(feature_importance.head())</span>
+<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a><span class="co"># 6. ROC Curve</span></span>
+<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a>fpr, tpr, _ <span class="op">=</span> roc_curve(y_test, y_prob)</span>
+<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-46"><a href="#cb12-46" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<span id="cb12-47"><a href="#cb12-47" aria-hidden="true" tabindex="-1"></a>plt.plot(fpr, tpr, label<span class="op">=</span><span class="ss">f'Logistic Regression (AUC = </span><span class="sc">{</span>roc_auc<span class="sc">:.4f}</span><span class="ss">)'</span>, color<span class="op">=</span><span class="st">'green'</span>)</span>
+<span id="cb12-48"><a href="#cb12-48" aria-hidden="true" tabindex="-1"></a>plt.plot([<span class="dv">0</span>, <span class="dv">1</span>], [<span class="dv">0</span>, <span class="dv">1</span>], linestyle<span class="op">=</span><span class="st">'--'</span>, color<span class="op">=</span><span class="st">'gray'</span>)  <span class="co"># Baseline</span></span>
+<span id="cb12-49"><a href="#cb12-49" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'False Positive Rate'</span>)</span>
+<span id="cb12-50"><a href="#cb12-50" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'True Positive Rate'</span>)</span>
+<span id="cb12-51"><a href="#cb12-51" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'ROC Curve'</span>)</span>
+<span id="cb12-52"><a href="#cb12-52" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb12-53"><a href="#cb12-53" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Accuracy (Logistic Regression): 0.9456
+ROC AUC (Logistic Regression): 0.8787
+Feature Importance (Top Features):
+         Feature  Coefficient
+4      HadAngina     2.447478
+36    AgeNumeric     2.156551
+5      HadStroke     0.843378
+18     ChestScan     0.606353
+26  HadDiabetes1     0.377558</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="NewProject_files/figure-html/cell-7-output-2.png" width="663" height="523" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>This project demonstrates the process of applying data mining techniques to predict heart disease. Through encoding, visualization, dimensionality reduction, and classification, we build models that predict whether a patient had a heart attack</p>
+</section>
+</section>
+<section id="references" class="level1">
+<h1>References</h1>
+<ol type="1">
+<li>Cover, T. M., &amp; Hart, P. E. (1967). Nearest neighbor pattern classification. <em>IEEE Transactions on Information Theory, 13</em>(1), 21-27.</li>
+<li>Jolliffe, I. T. (2002). <em>Principal component analysis</em>. Springer Series in Statistics.</li>
+<li>Hosmer, D. W., Lemeshow, S., &amp; Sturdivant, R. X. (2013). <em>Applied Logistic Regression</em>. Wiley.</li>
+</ol>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
