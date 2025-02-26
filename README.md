@@ -204,7 +204,7 @@ plt.show()
     Binary Columns:['HadHeartAttack', 'HadAngina', 'HadStroke', 'HadAsthma', 'HadSkinCancer', 'HadCOPD', 'HadDepressiveDisorder', 'HadKidneyDisease', 'HadArthritis', 'DeafOrHardOfHearing', 'BlindOrVisionDifficulty', 'DifficultyConcentrating', 'DifficultyWalking', 'DifficultyDressingBathing', 'DifficultyErrands', 'ChestScan', 'AlcoholDrinkers', 'HIVTesting', 'FluVaxLast12', 'PneumoVaxEver', 'HighRiskLastYear', 'CovidPos']
     Non-Binary Numerical Columns:['PatientID', 'HeightInMeters', 'WeightInKilograms', 'BMI']
 
-![](NewProject_files/figure-commonmark/cell-2-output-2.png)
+![](images/image1.png)
 
 ![](NewProject_files/figure-commonmark/cell-2-output-3.png)
 
